@@ -4,6 +4,7 @@ import { CharacterService } from '../character.service';
 import { PlanetService } from './../planet.service'
 import { FilmService } from './../film.service'
 import { SpeciesService } from './../species.service'
+import { VehicleService } from './../vehicle.service';
 
 @Component({
   selector: 'app-character-details',
@@ -19,7 +20,8 @@ export class CharacterDetailsComponent implements OnInit {
     private characterService: CharacterService,
     private planetService: PlanetService,
     private filmService: FilmService,
-    private speciesService: SpeciesService
+    private speciesService: SpeciesService,
+    private vehicleService: VehicleService,
     ) {
     }
 
@@ -27,11 +29,21 @@ export class CharacterDetailsComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('characterId');
     this.characterService.getCharacter(id)
     .subscribe(character => {
-      this.character = character
+      this.character = {
+        name: character['name'],
+        height: character['height'],
+        mass: character['mass'],
+        hairColor: character['hair_color'],
+        skinColor: character['skin_color'],
+        eyeColor: character['eye_color'],
+        birthYear: character['birth_year'],
+        gender: character['gender']
+      }
       this.isFav = this.isFavourite(this.character);
-      this.getPlanet(this.character['homeworld']);
-      this.getFilms(this.character['films']);
-      this.getSpecies(this.character['species'])
+      this.getPlanet(character['homeworld']);
+      this.getFilms(character['films']);
+      this.getSpecies(character['species']);
+      this.getVehicles(character['vehicles']);
     });
   }
 
@@ -63,6 +75,19 @@ export class CharacterDetailsComponent implements OnInit {
         this.character['species'].push({
           name: species['name']
         })
+      })
+    }
+  }
+
+  getVehicles(vehicles: string[]) {
+    this.character['vehicles'] = []
+
+    for (let url of vehicles) {
+      this.vehicleService.getVehicleByUrl(url).subscribe(vehicle => {
+        this.character['vehicles'].push({
+          name: vehicle['name']
+        })
+        console.log(this.character.vehicles)
       })
     }
 
