@@ -1,10 +1,11 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CharacterService } from '../character.service';
-import { PlanetService } from './../planet.service'
-import { FilmService } from './../film.service'
+import { PlanetService } from './../planet.service';
+import { FilmService } from './../film.service';
 import { SpeciesService } from './../species.service'
 import { VehicleService } from './../vehicle.service';
+import { StarshipService } from './../starship.service';
 
 @Component({
   selector: 'app-character-details',
@@ -22,6 +23,7 @@ export class CharacterDetailsComponent implements OnInit {
     private filmService: FilmService,
     private speciesService: SpeciesService,
     private vehicleService: VehicleService,
+    private starshipService: StarshipService
     ) {
     }
 
@@ -44,6 +46,7 @@ export class CharacterDetailsComponent implements OnInit {
       this.getFilms(character['films']);
       this.getSpecies(character['species']);
       this.getVehicles(character['vehicles']);
+      this.getStarShips(character['starships']);
     });
   }
 
@@ -87,10 +90,21 @@ export class CharacterDetailsComponent implements OnInit {
         this.character['vehicles'].push({
           name: vehicle['name']
         })
-        console.log(this.character.vehicles)
       })
     }
 
+  }
+
+  getStarShips(ships: string[]) {
+    this.character['starships'] = []
+
+    for (let url of ships) {
+      this.starshipService.getStarShipByUrl(url).subscribe(ship => {
+        this.character['starships'].push({
+          name: ship['name']
+        })
+      })
+    }
   }
 
   addToFavourites() {

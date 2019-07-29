@@ -36,4 +36,10 @@
             <li>{{vehicle.name}}</li>
         </ul>
     </div>
+    <div *ngIf="character.starships.length > 0">
+        <p>StarShips</p>
+        <ul *ngFor="let starship of character.starships">
+            <li>{{starship.name}}</li>
+        </ul>
+    </div>
 </div>
