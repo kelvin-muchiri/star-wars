@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CharacterService } from '../character.service';
 import { PlanetService } from './../planet.service'
+import { FilmService } from './../film.service'
 
 @Component({
   selector: 'app-character-details',
@@ -15,7 +16,8 @@ export class CharacterDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private characterService: CharacterService,
-    private planetService: PlanetService
+    private planetService: PlanetService,
+    private filmService: FilmService
     ) {
     }
 
@@ -26,6 +28,7 @@ export class CharacterDetailsComponent implements OnInit {
       this.character = character
       this.isFav = this.isFavourite(this.character);
       this.getPlanet(this.character['homeworld']);
+      this.getFilms(this.character['films']);
     });
   }
 
@@ -34,7 +37,20 @@ export class CharacterDetailsComponent implements OnInit {
       this.character['planet'] = {
         name: planet['name']
       }
-    })
+    });
+  }
+
+  getFilms(films: string[]) {
+    this.character['films'] = []
+
+    for (let url of films) {
+      this.filmService.getFilmByUrl(url).subscribe(film => {
+        this.character['films'].push({
+          title: film['title']
+        })
+        console.log(this.character.films)
+      })
+    }
   }
 
   addToFavourites() {
