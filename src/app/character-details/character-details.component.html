@@ -22,7 +22,12 @@
         <p>Films</p>
         <ul *ngFor="let film of character.films">
             <li>{{film.title}}</li>
-
+        </ul>
+    </div>
+    <div *ngIf="character.species">
+        <p>Species</p>
+        <ul *ngFor="let spc of character.species">
+            <li>{{spc.name}}</li>
         </ul>
     </div>
 </div>

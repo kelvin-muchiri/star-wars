@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CharacterService } from '../character.service';
 import { PlanetService } from './../planet.service'
 import { FilmService } from './../film.service'
+import { SpeciesService } from './../species.service'
 
 @Component({
   selector: 'app-character-details',
@@ -17,7 +18,8 @@ export class CharacterDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private characterService: CharacterService,
     private planetService: PlanetService,
-    private filmService: FilmService
+    private filmService: FilmService,
+    private speciesService: SpeciesService
     ) {
     }
 
@@ -29,6 +31,7 @@ export class CharacterDetailsComponent implements OnInit {
       this.isFav = this.isFavourite(this.character);
       this.getPlanet(this.character['homeworld']);
       this.getFilms(this.character['films']);
+      this.getSpecies(this.character['species'])
     });
   }
 
@@ -48,9 +51,21 @@ export class CharacterDetailsComponent implements OnInit {
         this.character['films'].push({
           title: film['title']
         })
-        console.log(this.character.films)
       })
     }
+  }
+
+  getSpecies(species: string[]) {
+    this.character['species'] = []
+
+    for (let url of species) {
+      this.speciesService.getSingleSpeciesByUrl(url).subscribe(species => {
+        this.character['species'].push({
+          name: species['name']
+        })
+      })
+    }
+
   }
 
   addToFavourites() {
