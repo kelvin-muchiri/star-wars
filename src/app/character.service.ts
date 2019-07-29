@@ -35,6 +35,7 @@ export class CharacterService {
           alert('You have reached your favourite limit')
         } else {
           this.favourites.push(character.name);
+          alert(`${character.name} added to favourites`)
         }
     }
   }
@@ -46,6 +47,7 @@ export class CharacterService {
   public removeFavourite(character: Character) {
     const itemIndex = this.favourites.findIndex(el => el === character);
     this.favourites.splice(itemIndex, 1);
+    alert(`${character.name} removed from favourites`)
   }
 
   public setPage(num: number) {
