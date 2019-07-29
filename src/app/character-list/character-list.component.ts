@@ -16,7 +16,7 @@ export class CharacterListComponent implements OnInit {
   }
 
   getCharacters(): void {
-    this.characterService.getCharacters(this.page).subscribe(data => {
+    this.characterService.getCharacters().subscribe(data => {
       this.totalItems = data['count'];
       this.characters = data['results'].map(character => {
         let isFav = false;

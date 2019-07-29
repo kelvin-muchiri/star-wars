@@ -13,8 +13,9 @@
     </h1>
     <p>Height: {{character.height}}</p>
     <p>Mass: {{character.mass}}</p>
-    <p>Hair color: {{character.hair_color}}</p>
-    <p>Skin color: {{character.skin_color}}</p>
-    <p>Year of birth: {{character.birth_year}}</p>
+    <p>Hair color: {{character.hairColor}}</p>
+    <p>Skin color: {{character.skinColor}}</p>
+    <p>Year of birth: {{character.birthYear}}</p>
     <p>Gender: {{character.gender}}</p>
+    <p *ngIf="character.planet">Home: {{character.planet.name}}</p>
 </div>

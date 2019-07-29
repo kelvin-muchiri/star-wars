@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CharacterService } from '../character.service';
+import { PlanetService } from './../planet.service'
 
 @Component({
   selector: 'app-character-details',
@@ -13,7 +14,8 @@ export class CharacterDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private characterService: CharacterService
+    private characterService: CharacterService,
+    private planetService: PlanetService
     ) {
     }
 
@@ -23,7 +25,16 @@ export class CharacterDetailsComponent implements OnInit {
     .subscribe(character => {
       this.character = character
       this.isFav = this.isFavourite(this.character);
+      this.getPlanet(this.character['homeworld']);
     });
+  }
+
+  getPlanet(url: string) {
+    this.planetService.getPlanetByUrl(url).subscribe(planet => {
+      this.character['planet'] = {
+        name: planet['name']
+      }
+    })
   }
 
   addToFavourites() {
