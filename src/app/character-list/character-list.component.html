@@ -1,0 +1,40 @@
+<h1>Star wars characters</h1>
+
+<table mdbTable striped="true">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Height</th>
+        <th>Mass</th>
+        <th>Hair Color</th>
+        <th>Skin Color</th>
+        <th>Eye Color</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr mdbTableCol
+      *ngFor="let character of characters; index as characterId">
+        <td>{{character.name}}
+          <i *ngIf="character.isFav" class="fas fa-heart fa-sm"></i>
+        </td>
+        <td>{{character.height}}</td>
+        <td>{{character.mass}}</td>
+        <td>{{character.hair_color}}</td>
+        <td>{{character.skin_color}}</td>
+        <td>{{character.eye_color}}</td>
+        <td>
+          <a
+            [title]="'View'"
+            [routerLink]="['characters', characterId + 10 *(page-1) + 1]"
+            class="spc" mdbBtn color="primary" size="sm" class="ml-0 waves-light"
+            mdbWavesEffect> <i class="fas fa-eye fa-lg"></i>
+          </a>
+        </td>
+      </tr>
+      <button (click)="previousPage()" mdbBtn color="green"
+      size="sm" mdbWavesEffect>Previous</button>
+      <button (click)="nextPage()" mdbBtn color="green"
+      size="sm" mdbWavesEffect>Next</button>
+    </tbody>
+</table>
