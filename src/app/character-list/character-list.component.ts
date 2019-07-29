@@ -23,7 +23,10 @@ export class CharacterListComponent implements OnInit {
         if (this.characterService.isFavourite(character)) {
             isFav = true
         }
-        return {...character, isFav: isFav}
+        let split_data = character['url'].split('/')
+        let id = split_data[split_data.length - 2]
+
+        return {...character, isFav: isFav, id: id}
       });
     })
   }

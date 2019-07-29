@@ -14,7 +14,7 @@
     </thead>
     <tbody>
       <tr mdbTableCol
-      *ngFor="let character of characters; index as characterId">
+      *ngFor="let character of characters;">
         <td>{{character.name}}
           <i *ngIf="character.isFav" class="fas fa-heart fa-sm"></i>
         </td>
@@ -26,7 +26,7 @@
         <td>
           <a
             [title]="'View'"
-            [routerLink]="['characters', characterId + 10 *(page-1) + 1]"
+            [routerLink]="['characters', character.id]"
             class="spc" mdbBtn color="primary" size="sm" class="ml-0 waves-light"
             mdbWavesEffect> <i class="fas fa-eye fa-lg"></i>
           </a>
